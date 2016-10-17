@@ -67,8 +67,17 @@ def vermelhodefense():
 	vermelho.vel*=0.9
 	vermelho.mass=defense
 	vermelho.color='black'
-	
 
+@listen('frame-enter')	
+def check_azul_lose():
+	if azul.x < 0 or azul.x > 800 or azul.y < 0 or azul.y > 600:
+		exit()
+		
+@listen('frame-enter')	
+def check_vermelho_lose():
+	if vermelho.x < 0 or vermelho.x > 800 or vermelho.y < 0 or vermelho.y > 600:
+		exit()
+		
 vermelho.force = lambda t: -10000*(vermelho.pos-pos.middle)
 azul.force =  lambda t: -10000*(azul.pos-pos.middle)
 
