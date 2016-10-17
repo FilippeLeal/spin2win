@@ -1,12 +1,17 @@
 from FGAme import *
 
-world.add.margin(20)
+espessura=40
+comprimento=220
+leftwall = world.add.aabb(shape=(espessura, comprimento), pos=(0,300), mass='inf')
+rigthwall = world.add.aabb(shape=(espessura, comprimento), pos=(800,300), mass='inf')
+topwall = world.add.aabb(shape=(comprimento, espessura), pos=(400,600), mass='inf')
+botwall = world.add.aabb(shape=(comprimento, espessura), pos=(400,0), mass='inf')
 
 # enemy = world.add.circle(10,pos=(100,100),vel=(300,0),omega=0,color='red')
 # hero =  world.add.circle(10,pos=(700,500),vel=(-300,0),omega=0,color='blue')
-hero = RegularPoly(6,length=40,pos=(300,30),vel=(-300,300),omega=20,color='blue')
-enemy = RegularPoly(5,length=40,pos=(30,300),vel=(300,-300),omega=25,color='red')
-hero.mass*=4
+hero = RegularPoly(6,length=40,pos=(200,300),vel=(300,0),omega=20,color='blue')
+enemy = RegularPoly(5,length=40,pos=(600,300),vel=(-300,0),omega=25,color='red')
+hero.mass*=2
 
 world.damping=0.9
 hero.inertia='inf'
@@ -32,10 +37,15 @@ def heromove(dx,dy):
 def enemymove(d2x,d2y):
 	enemy.vel+=(d2x,d2y)
 	
+@listen('long-press','return')
+def herodash():
+	hero.vel*=1.05
 	
-@listen('key-down','z')
-def dash():
-	hero.vel*=2
+@listen('long-press','space')
+def enemydash():
+	enemy.vel*=1.05
+	
+	
 
 enemy.force = lambda t: -10000*(enemy.pos-pos.middle)
 hero.force =  lambda t: -10000*(hero.pos-pos.middle)
