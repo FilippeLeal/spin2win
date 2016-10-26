@@ -8,7 +8,8 @@ topwall = world.add.aabb(shape=(comprimento, espessura), pos=(400,600), mass='in
 botwall = world.add.aabb(shape=(comprimento, espessura), pos=(400,0), mass='inf')
 
 normalmass=1500
-defense = normalmass*3
+defense = normalmass*5
+attack = normalmass*3
 world.damping=0.9
 
 azul = RegularPoly(6,length=40,pos=(200,300),vel=(300,0),omega=20,color='blue',mass=normalmass*2)
@@ -23,6 +24,10 @@ world.add(vermelho)
 
 dx=0
 dy=0
+is_force_blue_on=1
+is_force_red_on=1
+azul_in_dash='off'
+vermelho_in_dash='off'
 
 @listen ('frame-enter')
 def normalize():
@@ -31,35 +36,72 @@ def normalize():
 	azul.color='blue'
 	vermelho.color='red'
 
+
 @listen('long-press', 'left',dx=-5,dy=0)
 @listen('long-press', 'right',dx=5,dy=0)
 @listen('long-press', 'up',dy=5,dx=0)
 @listen('long-press', 'down',dy=-5,dx=0)
 def azulmove(dx,dy):
-	azul.vel+=(dx,dy)
+	if azul_in_dash == 'off':
+		azul.vel+=(dx,dy)
+	else: 
+		azul.vel=azul.vel
 
 @listen('long-press', 'a',d2x=-10,d2y=0)
 @listen('long-press', 'd',d2x=10,d2y=0)
 @listen('long-press', 'w',d2y=10,d2x=0)
 @listen('long-press', 's',d2y=-10,d2x=0)
 def vermelhomove(d2x,d2y):
-	vermelho.vel+=(d2x,d2y)
+	if vermelho_in_dash == 'off':
+		vermelho.vel+=(d2x,d2y)
+	else: 
+		vermelho.vel=vermelho.vel
+
+
+
 	
 @listen('long-press','return')
 def azuldash():
-	azul.vel*=1.05
+	global is_force_blue_on
+	is_force_blue_on=0
+	global azul_in_dash
+	azul_in_dash='on'
+	azul.vel*=1.01
+	azul.mass=attack
 	azul.color='orange'
 	
+
+@listen ('key-up','return')
+def nodashazul():
+	global azul_in_dash
+	azul_in_dash='off'
+	global is_force_blue_on
+	is_force_blue_on = 1
+
 @listen('long-press','space')
 def vermelhodash():
-	vermelho.vel*=1.05
+	global is_force_red_on
+	is_force_red_on=0
+	global vermelho_in_dash
+	vermelho_in_dash='on'
+	vermelho.vel*=1.01
+	vermelho.mass=attack
 	vermelho.color='orange'
+
+@listen ('key-up','space')
+def nodashvermelho():
+	global vermelho_in_dash
+	vermelho_in_dash='off'
+	global is_force_red_on
+	is_force_red_on = 1
+	
+
 
 @listen('long-press','p')
 def azuldefense():
 	azul.vel*=0.9
 	azul.mass=defense
-	azul.color='black'
+	azul.color='black' 
 	
 
 @listen('long-press','x')
@@ -78,8 +120,10 @@ def check_vermelho_lose():
 	if vermelho.x < 0 or vermelho.x > 800 or vermelho.y < 0 or vermelho.y > 600:
 		exit()
 		
-vermelho.force = lambda t: -10000*(vermelho.pos-pos.middle)
-azul.force =  lambda t: -10000*(azul.pos-pos.middle)
+
+vermelho.force = lambda v: -10000*(vermelho.pos-pos.middle)*is_force_red_on
+azul.force =  lambda t: -10000*(azul.pos-pos.middle)*is_force_blue_on
 
 
+	
 run()
