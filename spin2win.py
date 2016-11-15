@@ -5,8 +5,9 @@ from arena import Arena
 	
 normalmass=1500
 defense = normalmass*10
-attack = normalmass*5
-world.damping=0.9
+attack = normalmass*3
+
+
 
 blue = RegularPoly(6,length=40,pos=(200,300),vel=(300,0),omega=20,color='blue',mass=normalmass*2)
 red = RegularPoly(5,length=40,pos=(600,300),vel=(-300,0),omega=25,color='red',mass=normalmass)
@@ -16,8 +17,9 @@ red.inertia='inf'
 
 #Trocar por arena aqui, e adicionar como lista
 Arena.draw_walls()
-world.add(blue)
-world.add(red)
+Arena.start([blue, red])
+#world.add(blue)
+#world.add(red)
 
 dx=0
 dy=0
@@ -27,8 +29,6 @@ blue_in_dash='off'
 red_in_dash='off'
 
 Music.play_music("battle_theme.mp3")
-
-
 
 @listen('long-press', 'left',dx=-5,dy=0)
 @listen('long-press', 'right',dx=5,dy=0)
@@ -92,7 +92,7 @@ def nodashred():
 	global is_force_red_on
 	is_force_red_on = 1
 	red.color='red'
-	red.mass=normalmass
+	red.mass=2*normalmass
 
 
 @listen('key-down', 'p')	

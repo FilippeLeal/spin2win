@@ -2,8 +2,10 @@ from FGAme import *
 
 class Arena(World):
 
-	def init(self, damping):
-		self.damping = world.damping
+	def start(object=[]):
+		world.damping=0.9
+		world.add(object[0])
+		world.add(object[1])
 		
 	def draw_walls():
 		width=40
