@@ -2,12 +2,11 @@ from FGAme import *
 import pygame	
 from music import Music
 from arena import Arena
-#from character import Character
 	
 normalmass=1500
 defense = normalmass*5
 attack = normalmass*3
-#world.damping=0.9
+world.damping=0.9
 
 blue = RegularPoly(6,length=40,pos=(200,300),vel=(300,0),omega=20,color='blue',mass=normalmass*2)
 red = RegularPoly(5,length=40,pos=(600,300),vel=(-300,0),omega=25,color='red',mass=normalmass)
@@ -16,7 +15,6 @@ blue.inertia='inf'
 red.inertia='inf'
 
 #Trocar por arena aqui, e adicionar como lista
-arena = Arena(0.9, [blue, red,])
 Arena.draw_walls()
 world.add(blue)
 world.add(red)
