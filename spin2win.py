@@ -1,25 +1,23 @@
 from FGAme import *
 import pygame	
+from music import Music
+from arena import Arena
+#from character import Character
 	
-width=40
-height=220
-leftwall = world.add.aabb(shape=(width, height), pos=(0,300), mass='inf')
-rigthwall = world.add.aabb(shape=(width, height), pos=(800,300), mass='inf')
-topwall = world.add.aabb(shape=(height, width), pos=(400,600), mass='inf')
-botwall = world.add.aabb(shape=(height, width), pos=(400,0), mass='inf')
-
 normalmass=1500
 defense = normalmass*5
 attack = normalmass*3
-world.damping=0.9
+#world.damping=0.9
 
 blue = RegularPoly(6,length=40,pos=(200,300),vel=(300,0),omega=20,color='blue',mass=normalmass*2)
 red = RegularPoly(5,length=40,pos=(600,300),vel=(-300,0),omega=25,color='red',mass=normalmass)
 
-
 blue.inertia='inf'
 red.inertia='inf'
 
+#Trocar por arena aqui, e adicionar como lista
+arena = Arena(0.9, [blue, red,])
+Arena.draw_walls()
 world.add(blue)
 world.add(red)
 
@@ -30,12 +28,7 @@ is_force_red_on=1
 blue_in_dash='off'
 red_in_dash='off'
 
-pygame.mixer.pre_init(44100, 16, 2, 4096)
-pygame.init()
-main_sound = pygame.mixer.music.load("battle_theme.mp3")
-main_sound = pygame.mixer.music.play()
-pygame.mixer.music.set_volume(0.2);
-
+Music.play_music("battle_theme.mp3")
 
 @listen ('frame-enter')
 def normalize():
@@ -68,10 +61,7 @@ def redmove(d2x,d2y):
 @listen ('key-down','return')
 @listen ('key-down','space')
 def dashsound():
-	dash_sound = pygame.mixer.Sound("dash.wav")
-	dash_sound.set_volume(0.2)
-	dash_sound.play()
-	
+	Music.play_sound("dash.wav")
 		
 @listen('long-press','return')
 def bluedash():
@@ -112,9 +102,7 @@ def nodashred():
 @listen('key-down', 'p')	
 @listen('key-down', 'x')
 def defesesound():
-	dash_sound = pygame.mixer.Sound("defense.wav")
-	dash_sound.set_volume(0.3)
-	dash_sound.play()
+	Music.play_sound("defense.wav")
 
 @listen('long-press','p')
 def bluedefense():
