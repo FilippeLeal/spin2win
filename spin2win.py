@@ -4,8 +4,8 @@ from music import Music
 from arena import Arena
 	
 normalmass=1500
-defense = normalmass*5
-attack = normalmass*3
+defense = normalmass*10
+attack = normalmass*5
 world.damping=0.9
 
 blue = RegularPoly(6,length=40,pos=(200,300),vel=(300,0),omega=20,color='blue',mass=normalmass*2)
@@ -28,12 +28,6 @@ red_in_dash='off'
 
 Music.play_music("battle_theme.mp3")
 
-@listen ('frame-enter')
-def normalize():
-	blue.mass=normalmass*2
-	red.mass=normalmass
-	blue.color='blue'
-	red.color='red'
 
 
 @listen('long-press', 'left',dx=-5,dy=0)
@@ -61,23 +55,25 @@ def redmove(d2x,d2y):
 def dashsound():
 	Music.play_sound("dash.wav")
 		
-@listen('long-press','return')
+@listen('key-down','return')
 def bluedash():
 	global is_force_blue_on
 	is_force_blue_on=0
 	global blue_in_dash
 	blue_in_dash='on'
-	blue.vel*=1.01
+	blue.vel*=1.1
 	blue.mass=attack
 	blue.color='orange'
+	schedule(1,nodashblue)	
+
 	
-	
-@listen ('key-up','return')
 def nodashblue():
 	global blue_in_dash
 	blue_in_dash='off'
 	global is_force_blue_on
 	is_force_blue_on = 1
+	blue.color='blue'
+	blue.mass=normalmass
 
 @listen('long-press','space')
 def reddash():
@@ -85,16 +81,18 @@ def reddash():
 	is_force_red_on=0
 	global red_in_dash
 	red_in_dash='on'
-	red.vel*=1.01
+	red.vel*=1.1
 	red.mass=attack
 	red.color='orange'
+	schedule(1,nodashred)
 
-@listen ('key-up','space')
 def nodashred():
 	global red_in_dash
 	red_in_dash='off'
 	global is_force_red_on
 	is_force_red_on = 1
+	red.color='red'
+	red.mass=normalmass
 
 
 @listen('key-down', 'p')	
@@ -107,12 +105,22 @@ def bluedefense():
 	blue.vel*=0.9
 	blue.mass=defense
 	blue.color='black' 
+	schedule(1,nodefenseblue)
 	
 @listen('long-press','x')
 def reddefense():
 	red.vel*=0.9
 	red.mass=defense
 	red.color='black'
+	schedule(1,nodefensered)
+
+def nodefenseblue():
+	blue.mass=normalmass*2
+	blue.color='blue'
+
+def nodefensered():
+	red.mass=normalmass
+	red.color='red'
 
 @listen('frame-enter')
 def check_blue_lose():
