@@ -2,14 +2,15 @@ from FGAme import *
 import pygame	
 from music import Music
 from arena import Arena
+from character import Character
 	
 normalmass=1500
 defense = normalmass*10
 attack = normalmass*3
 
-
-
-blue = RegularPoly(6,length=40,pos=(200,300),vel=(300,0),omega=20,color='blue',mass=normalmass*2)
+blue = Character(N=6,length=40,pos=(200,300),vel=(300,0),omega=20)
+blue.draw_poly(N=6,length=40,pos=(200,300),vel=(300,0),omega=20,color='blue',mass=normalmass*2)
+#blue = RegularPoly(6,length=40,pos=(200,300),vel=(300,0),omega=20,color='blue',mass=normalmass*2)
 red = RegularPoly(5,length=40,pos=(600,300),vel=(-300,0),omega=25,color='red',mass=normalmass)
 
 blue.inertia='inf'
