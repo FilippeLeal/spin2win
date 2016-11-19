@@ -3,24 +3,16 @@ import pygame
 from music import Music
 from arena import Arena
 from character import Character
-	
+
+#Verificar quais dados é possível tirar desse main	
 normalmass=1500
 defense = normalmass*10
 attack = normalmass*3
 
-blue = Character(N=6,length=40,pos=(200,300),vel=(300,0),omega=20)
-blue.draw_poly(N=6,length=40,pos=(200,300),vel=(300,0),omega=20,color='blue',mass=normalmass*2)
-#blue = RegularPoly(6,length=40,pos=(200,300),vel=(300,0),omega=20,color='blue',mass=normalmass*2)
-red = RegularPoly(5,length=40,pos=(600,300),vel=(-300,0),omega=25,color='red',mass=normalmass)
+blue = Character(N=6,length=40,pos=(200,300),vel=(300,0),omega=20, color = 'blue', mass=normalmass*2)
+red = Character(N=5, length=40, pos=(600,300), vel=(-300, 0), omega=25, color = 'red', mass=normalmass)
 
-blue.inertia='inf'
-red.inertia='inf'
-
-#Trocar por arena aqui, e adicionar como lista
-Arena.draw_walls()
 Arena.start([blue, red])
-#world.add(blue)
-#world.add(red)
 
 dx=0
 dy=0
@@ -30,12 +22,14 @@ blue_in_dash='off'
 red_in_dash='off'
 
 Music.play_music("battle_theme.mp3")
+red.force = lambda v: -10000*(red.pos-pos.middle)*is_force_red_on
+blue.force =  lambda t: -10000*(blue.pos-pos.middle)*is_force_blue_on
 
 @listen('long-press', 'left',dx=-5,dy=0)
 @listen('long-press', 'right',dx=5,dy=0)
 @listen('long-press', 'up',dy=5,dx=0)
 @listen('long-press', 'down',dy=-5,dx=0)
-def bluemove(dx,dy):
+def bluemove(dx, dy):
 	if blue_in_dash == 'off':
 		blue.vel+=(dx,dy)
 	else: 
@@ -123,6 +117,8 @@ def nodefensered():
 	red.mass=normalmass
 	red.color='red'
 
+
+
 @listen('frame-enter')
 def check_blue_lose():
 	if blue.x < 0 or blue.x > 800 or blue.y < 0 or blue.y > 600:
@@ -132,8 +128,5 @@ def check_blue_lose():
 def check_red_lose():
 	if red.x < 0 or red.x > 800 or red.y < 0 or red.y > 600:
 		exit()
-		
-red.force = lambda v: -10000*(red.pos-pos.middle)*is_force_red_on
-blue.force =  lambda t: -10000*(blue.pos-pos.middle)*is_force_blue_on
 
-run()
+
