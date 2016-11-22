@@ -1,8 +1,8 @@
 from FGAme import *
 import pygame	
-from music import Music
-from arena import Arena
-from character import Character
+from spin2win.music import Music
+from spin2win.arena import Arena
+from spin2win.character import Character
 
 #Verificar quais dados é possível tirar desse main	
 normalmass=1500
@@ -128,5 +128,3 @@ def check_blue_lose():
 def check_red_lose():
 	if red.x < 0 or red.x > 800 or red.y < 0 or red.y > 600:
 		exit()
-
-
