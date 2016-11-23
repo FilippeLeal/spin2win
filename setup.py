@@ -44,11 +44,12 @@ setup(
         # Packages and dependencies
 		package_dir={'': 'src'},
         packages=find_packages('src'),
+		include_package_data=True,
       
         package_data={
-            'spin2win':  [
-				'images/*.png', 'images/*.jpg', 'sounds/*.mp3', 'sounds/*.wav'
-			]
+			'spin2win': [
+				'images/*.png', 'images/*.jpg', 'sounds/*.mp3', 'sounds/*.wav',
+			],
             },
 
         install_requires=[

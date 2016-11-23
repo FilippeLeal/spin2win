@@ -3,6 +3,8 @@ import pygame
 from spin2win.music import Music
 from spin2win.arena import Arena
 from spin2win.character import Character
+import os
+_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 #Verificar quais dados é possível tirar desse main	
 normalmass=1500
@@ -21,7 +23,8 @@ is_force_red_on=1
 blue_in_dash='off'
 red_in_dash='off'
 
-Music.play_music("battle_theme.mp3")
+main_sound = os.path.join(_ROOT, 'sounds/battle_theme.mp3')
+Music.play_music(main_sound)
 red.force = lambda v: -10000*(red.pos-pos.middle)*is_force_red_on
 blue.force =  lambda t: -10000*(blue.pos-pos.middle)*is_force_blue_on
 
@@ -48,7 +51,8 @@ def redmove(d2x,d2y):
 @listen ('key-down','return')
 @listen ('key-down','space')
 def dashsound():
-	Music.play_sound("dash.wav")
+	dash_sound = os.path.join(_ROOT, 'sounds/dash.wav')
+	Music.play_sound(dash_sound)
 		
 @listen('key-down','return')
 def bluedash():
@@ -93,7 +97,8 @@ def nodashred():
 @listen('key-down', 'p')	
 @listen('key-down', 'x')
 def defesesound():
-	Music.play_sound("defense.wav")
+	defense_sound = os.path.join(_ROOT, 'sounds/defense.wav')
+	Music.play_sound(defense_sound)
 
 @listen('long-press','p')
 def bluedefense():
@@ -116,8 +121,6 @@ def nodefenseblue():
 def nodefensered():
 	red.mass=normalmass
 	red.color='red'
-
-
 
 @listen('frame-enter')
 def check_blue_lose():
