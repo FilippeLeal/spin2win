@@ -1,8 +1,7 @@
 from FGAme import *
 import pygame	
+from spin2win.arena import *
 from spin2win.music import Music
-from spin2win.arena import Arena
-from spin2win.character import Character
 import os
 _ROOT = os.path.abspath(os.path.dirname(__file__))
 
@@ -11,22 +10,18 @@ normalmass=1500
 defense = normalmass*10
 attack = normalmass*3
 
-blue = Character(N=6,length=40,pos=(200,300),vel=(300,0),omega=20, color = 'blue', mass=normalmass*2)
-red = Character(N=5, length=40, pos=(600,300), vel=(-300, 0), omega=25, color = 'red', mass=normalmass)
-
-Arena.start([blue, red])
-
 dx=0
 dy=0
 is_force_blue_on=1
 is_force_red_on=1
 blue_in_dash='off'
+
 red_in_dash='off'
 
 main_sound = os.path.join(_ROOT, 'sounds/battle_theme.mp3')
 Music.play_music(main_sound)
-red.force = lambda v: -10000*(red.pos-pos.middle)*is_force_red_on
-blue.force =  lambda t: -10000*(blue.pos-pos.middle)*is_force_blue_on
+#red.force = lambda v: -10000*(red.pos-pos.middle)*is_force_red_on
+#blue.force =  lambda t: -10000*(blue.pos-pos.middle)*is_force_blue_on
 
 @listen('long-press', 'left',dx=-5,dy=0)
 @listen('long-press', 'right',dx=5,dy=0)
@@ -122,12 +117,4 @@ def nodefensered():
 	red.mass=normalmass
 	red.color='red'
 
-@listen('frame-enter')
-def check_blue_lose():
-	if blue.x < 0 or blue.x > 800 or blue.y < 0 or blue.y > 600:
-		exit()
-		
-@listen('frame-enter')
-def check_red_lose():
-	if red.x < 0 or red.x > 800 or red.y < 0 or red.y > 600:
-		exit()
+arena = Arena()
