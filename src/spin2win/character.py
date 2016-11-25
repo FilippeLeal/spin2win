@@ -30,16 +30,12 @@ class Character(RegularPoly):
 		
 	def dash(self, r_mass, r_color):
 		attack = 1500*3
-		print(self.color)
-		#FIX ME: Não está alterando a cor ao dar o dash se o uso o schedule para chamar o proximo método
 		self.color = 'orange'
-		print(self.color)
 		self.is_force_on = 0
 		self.in_dash = True
 		self.vel *= 1.1
 		self.mass=attack
-		#FIX ME: Schedule (o periodo de tempo) parece não estar funcionando
-		schedule(1, self.nodash(r_mass=r_mass, r_color=r_color))	
+		schedule(1, self.nodash, r_mass=r_mass, r_color=r_color)
 	
 	def nodash(self, r_mass, r_color):
 		self.in_dash = False
@@ -51,12 +47,12 @@ class Character(RegularPoly):
 		defense = 1500*10
 		self.vel*=0.9
 		self.mass=defense
-		self.color='black' 
-		schedule(1, self.nodefense(r_mass, r_color))
+		self.color = 'black' 
+		schedule(1, self.nodefense, r_mass=r_mass, r_color=r_color)
 	
 	def nodefense(self, r_mass, r_color):
-		self.mass=r_mass
-		self.color=r_color
+		self.mass = r_mass
+		self.color = r_color
 	
 	def check_lose(self):
 		if self.x < 0 or self.x > 800 or self.y < 0 or self.y > 600:
