@@ -2,12 +2,12 @@ from FGAme import *
 from spin2win.character import Character
 
 class Arena(World):
-	def init(self, is_force_on = 1):
+	def init(self):
 		self.blue = Character(N=6,length=40,pos=(200,300),vel=(300,0),omega=20, color = 'blue', mass=3000)
 		self.red = Character(N=5, length=40, pos=(600,300), vel=(-300, 0), omega=25, color = 'red', mass=1500)
 		self.add([self.blue, self.red])
-		self.red.force = lambda v: -10000*(self.red.pos-pos.middle)*is_force_on
-		self.blue.force =  lambda t: -10000*(self.blue.pos-pos.middle)*is_force_on
+		self.red.force = lambda v: -10000*(self.red.pos-pos.middle)*self.red.is_force_on
+		self.blue.force =  lambda t: -10000*(self.blue.pos-pos.middle)*self.blue.is_force_on
 		
 		self.damping=0.9
 		
@@ -22,7 +22,13 @@ class Arena(World):
 		on('long-press', 'd').do(self.red.move_character, 10, 0)
 		on('long-press', 'w').do(self.red.move_character, 0, 10)
 		on('long-press', 's').do(self.red.move_character, 0, -10)
+		on('long-press','return').do(self.blue.dash, self.blue.mass, self.blue.color)
+		on('long-press', 'space').do(self.red.dash, self.red.mass, self.red.color)
+		on('long-press', 'p').do(self.blue.defense, self.blue.mass, self.blue.color)
+		on('long-press', 'x').do(self.red.defense, self.red.mass, self.red.color)
 		
+		on('frame-enter').do(self.red.check_lose)
+		on('frame-enter').do(self.blue.check_lose)
 		
 	def draw_walls(self):
 		width=40
@@ -32,9 +38,5 @@ class Arena(World):
 		self.topwall = self.add.aabb(shape=(height, width), pos=(400,600), mass='inf')
 		self.botwall = self.add.aabb(shape=(height, width), pos=(400,0), mass='inf')
 		
-	#@listen('frame-enter')
-	#def check_lose(self):
-	#	if blue.x < 0 or self.x > 800 or self.y < 0 or self.y > 600:
-	#		exit()
 	
 	
