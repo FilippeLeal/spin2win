@@ -20,28 +20,6 @@ red_in_dash='off'
 
 main_sound = os.path.join(_ROOT, 'sounds/battle_theme.mp3')
 Music.play_music(main_sound)
-#red.force = lambda v: -10000*(red.pos-pos.middle)*is_force_red_on
-#blue.force =  lambda t: -10000*(blue.pos-pos.middle)*is_force_blue_on
-
-@listen('long-press', 'left',dx=-5,dy=0)
-@listen('long-press', 'right',dx=5,dy=0)
-@listen('long-press', 'up',dy=5,dx=0)
-@listen('long-press', 'down',dy=-5,dx=0)
-def bluemove(dx, dy):
-	if blue_in_dash == 'off':
-		blue.vel+=(dx,dy)
-	else: 
-		blue.vel=blue.vel
-
-@listen('long-press', 'a',d2x=-10,d2y=0)
-@listen('long-press', 'd',d2x=10,d2y=0)
-@listen('long-press', 'w',d2y=10,d2x=0)
-@listen('long-press', 's',d2y=-10,d2x=0)
-def redmove(d2x,d2y):
-	if red_in_dash == 'off':
-		red.vel+=(d2x,d2y)
-	else: 
-		red.vel=red.vel
 
 @listen ('key-down','return')
 @listen ('key-down','space')
