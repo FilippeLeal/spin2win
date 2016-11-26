@@ -29,23 +29,26 @@ class Character(RegularPoly):
 		Music.play_sound(defense_sound)
 		
 	def dash(self, r_mass, r_color):
-		attack = 1500*3
+		attack = 5000
 		self.color = 'orange'
 		self.is_force_on = 0
 		self.in_dash = True
-		self.vel *= 1.1
+		self.vel= self.vel/abs(self.vel)*1000
 		self.mass=attack
-		schedule(1, self.nodash, r_mass=r_mass, r_color=r_color)
-	
+		schedule(.5, self.nodash, r_mass=r_mass, r_color=r_color)
+		
+
 	def nodash(self, r_mass, r_color):
 		self.in_dash = False
 		self.is_force_on = 1
 		self.color = r_color
 		self.mass = r_mass
 		
+		
 	def defense(self, r_mass, r_color):
-		defense = 1500*10
-		self.vel*=0.9
+		defense = 30000
+		self.vel=vec(0,0)
+		self.is_force_on = 0
 		self.mass=defense
 		self.color = 'black' 
 		schedule(1, self.nodefense, r_mass=r_mass, r_color=r_color)
@@ -53,6 +56,7 @@ class Character(RegularPoly):
 	def nodefense(self, r_mass, r_color):
 		self.mass = r_mass
 		self.color = r_color
+		self.is_force_on = 1
 	
 	def check_lose(self):
 		if self.x < 0 or self.x > 800 or self.y < 0 or self.y > 600:

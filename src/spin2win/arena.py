@@ -3,11 +3,11 @@ from spin2win.character import Character
 
 class Arena(World):
 	def init(self):
-		self.blue = Character(N=6,length=40,pos=(200,300),vel=(300,0),omega=20, color = 'blue', mass=3000)
-		self.red = Character(N=5, length=40, pos=(600,300), vel=(-300, 0), omega=25, color = 'red', mass=1500)
+		self.blue = Character(N=6,length=40,pos=(200,400),vel=(300,0),omega=2*6.28, color = 'blue', mass=2500)
+		self.red = Character(N=5, length=40, pos=(600,200), vel=(-300, 0), omega=3*6.28, color = 'red', mass=1500)
 		self.add([self.blue, self.red])
-		self.red.force = lambda v: -10000*(self.red.pos-pos.middle)*self.red.is_force_on
-		self.blue.force =  lambda t: -10000*(self.blue.pos-pos.middle)*self.blue.is_force_on
+		self.red.force = lambda v: -75*self.red.is_force_on*abs(self.red.pos-pos.middle)*(self.red.pos-pos.middle)
+		self.blue.force =  lambda t: -75*self.blue.is_force_on*abs(self.blue.pos-pos.middle)*(self.blue.pos-pos.middle)
 		
 		self.damping=0.9
 		
