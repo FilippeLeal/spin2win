@@ -29,6 +29,7 @@ class Arena(World):
 		on('frame-enter').do(self.red.check_lose)
 		on('frame-enter').do(self.blue.check_lose)
 		
+		
 	def draw_walls(self):
 		width=40
 		height=220

@@ -7,5 +7,5 @@ _ROOT = os.path.abspath(os.path.dirname(__file__))
 
 main_sound = os.path.join(_ROOT, 'sounds/battle_theme.mp3')
 Music.play_music(main_sound)
-
+			
 arena = Arena()

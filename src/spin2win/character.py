@@ -11,7 +11,7 @@ class Character(RegularPoly):
 		self.defense_cd= defense_cd
 		super(Character, self).__init__(inertia='inf', *args, **kwargs)
 		on('pre-collision').do(self.sound_col)
-		on('post-collision').do(self.deal_damage)
+		#on('post-collision').do(self.detect_colision)
 		self.health=health
 		self.armor=armor
 		self.damage=1000/armor
@@ -71,18 +71,28 @@ class Character(RegularPoly):
 		self.color = r_color
 		self.is_force_on = 1
 		schedule(3, self.defense_out_cd)
+		
 	#FIX-ME ele fala que estamos passando 3 argumentos, então estamos pedindo 3 tbm
 	def sound_col(self,col,dx):
 		sound_col = os.path.join(_ROOT, 'sounds/collision_small.wav')
 		Music.play_sound(sound_col)
+		
 	
-	def deal_damage(self,col,damage):
-		print(Character)
-		if isinstance(col, Character): #and isinstance(B, self):
-			self.health-=self.damage
-			print(self.health)
-		
-		
 	def check_lose(self):
 		if self.x < 0 or self.x > 800 or self.y < 0 or self.y > 600:
 			exit()
+
+	@listen('post-collision')
+	def detect_colision(arena, col):
+		A, B = col
+		print(A.color)
+		if isinstance(A, Character) and isinstance(B, Character):
+			print('MALUCO')
+			A.deal_damage(15)
+			B.deal_damage(20)
+			#self.health-=self.damage
+			#print(self.health)
+	
+	def deal_damage(self, damage):
+		self.health-=damage
+		print(self.health)
