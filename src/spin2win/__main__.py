@@ -26,7 +26,7 @@ def main(args=None):
     #args = parser.parse_args(args)
     
     # Roda jogo!
-    import spin2win.game
+    import spin2win.menu
     run()
 
 if __name__ == '__main__':

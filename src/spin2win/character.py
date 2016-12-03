@@ -4,7 +4,8 @@ import os
 _ROOT = os.path.abspath(os.path.dirname(__file__))
 
 class Character(RegularPoly):
-	def __init__(self, health,armor,in_dash=False,dash_cd=False,defense_cd=False, is_force_on = 1,*args, **kwargs):
+	def __init__(self, name, health,armor,in_dash=False,dash_cd=False,defense_cd=False, is_force_on = 1,*args, **kwargs):
+		self.name = name
 		self.in_dash = in_dash
 		self.is_force_on = is_force_on
 		self.dash_cd= dash_cd
@@ -87,6 +88,9 @@ class Character(RegularPoly):
 	
 	def check_lose(self):
 		if self.x < 0 or self.x > 800 or self.y < 0 or self.y > 600:
+			exit()
+		elif self.health <= 0:
+			print("%s PERDEU" % self.name)
 			exit()
 
 	@listen('post-collision')

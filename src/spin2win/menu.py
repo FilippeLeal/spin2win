@@ -1,9 +1,9 @@
-import spin2win
+import spin2win.game
 import pygame
 import time
 import random
  
- 
+pygame.init()
 display_width = 800
 display_height = 600
  
@@ -76,7 +76,7 @@ def button(msg,x,y,w,h,ic,ac, action=None):
     gameDisplay.blit(textSurf, textRect)
 	
 def game_loop():
-    spin2win.run()
+    spin2win.game.run()
 
 def quitgame():
 	pygame.quit()

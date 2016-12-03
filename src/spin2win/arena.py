@@ -3,8 +3,8 @@ from spin2win.character import Character
 
 class Arena(World):
 	def init(self):
-		self.blue = Character(N=6,length=40,pos=(200,400),vel=(300,0),omega=2*6.28, color = 'blue', mass=2500,health=100,armor=10)
-		self.red = Character(N=5, length=40, pos=(600,200), vel=(-300, 0), omega=3*6.28, color = 'red', mass=1500,health=100,armor=10)
+		self.blue = Character('Azul', N=6,length=40,pos=(200,400),vel=(300,0),omega=2*6.28, color = 'blue', mass=2500,health=100,armor=10)
+		self.red = Character('Vermelho', N=5, length=40, pos=(600,200), vel=(-300, 0), omega=3*6.28, color = 'red', mass=1500,health=100,armor=10)
 		self.add([self.blue, self.red])
 		self.red.force = lambda v: -100*self.red.is_force_on*abs(self.red.pos-pos.middle)*(self.red.pos-pos.middle)
 		self.blue.force =  lambda t: -100*self.blue.is_force_on*abs(self.blue.pos-pos.middle)*(self.blue.pos-pos.middle)
