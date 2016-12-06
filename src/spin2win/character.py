@@ -2,6 +2,7 @@ from FGAme import *
 from spin2win.music import Music
 import os
 _ROOT = os.path.abspath(os.path.dirname(__file__))
+from spin2win.text import message_display
 
 class Character(RegularPoly):
 	def __init__(self, name, health,armor,in_dash=False,dash_cd=False,defense_cd=False, is_force_on = 1,*args, **kwargs):
@@ -97,12 +98,22 @@ class Character(RegularPoly):
 	def detect_colision(arena, col):
 		A, B = col
 		if isinstance(A, Character) and isinstance(B, Character):
-			A.deal_damage()
-			B.deal_damage()
+			A.deal_damage(test=True)
+			B.deal_damage(test=True)
+		else:
+			A.deal_damage(test=False)
+			B.deal_damage(test=False)
 
 	
-	def deal_damage(self):
-		self.health-=50/self.armor
-		print(self.mass)
-		print(self.health)
-		print('_______________')
+	def deal_damage(self, test):
+		if (test==True):
+			self.health-=50/self.armor
+			print(self.health)
+			print('_______________')
+			self.show_pontuaction(self.health, True)
+		else: 
+			print ('DOIDO')
+		
+	def show_pontuaction(self, health, test):
+		message_display(50, 625, str(health), test)
+		message_display(750, 625, str(health), test)
