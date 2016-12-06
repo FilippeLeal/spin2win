@@ -4,6 +4,8 @@ import os
 _ROOT = os.path.abspath(os.path.dirname(__file__))
 from spin2win.text import message_display
 
+blueGlobalHealth = 100
+redGlobalHealth = 100
 class Character(RegularPoly):
 	def __init__(self, name, health,armor,in_dash=False,dash_cd=False,defense_cd=False, is_force_on = 1,*args, **kwargs):
 		self.name = name
@@ -17,7 +19,7 @@ class Character(RegularPoly):
 		self.armor=armor
 		self.damage=0
 		self.dx=0
-		self.dy=0
+		self.dy=0  
 											
 	def move_character(self, dx, dy):
 		if self.in_dash == False:
@@ -98,22 +100,25 @@ class Character(RegularPoly):
 	def detect_colision(arena, col):
 		A, B = col
 		if isinstance(A, Character) and isinstance(B, Character):
-			A.deal_damage(test=True)
-			B.deal_damage(test=True)
+			A.deal_damage()
+			B.deal_damage()
+			return True
 		else:
-			A.deal_damage(test=False)
-			B.deal_damage(test=False)
-
+			return False
+			
+	#FIX-ME: O unico jeito de atualizar a vida foi usando variavel global, 
+	#parece que o frame-enter pega os valores iniciais do objeto, por isso o uso de globais
+	def deal_damage(self):
+		self.health-=50/self.armor
+		print(self.health)
+		if(self.name == 'Azul'):
+			global blueGlobalHealth
+			blueGlobalHealth = self.health
+		elif(self.name == 'Vermelho'):
+			global redGlobalHealth
+			redGlobalHealth = self.health
 	
-	def deal_damage(self, test):
-		if (test==True):
-			self.health-=50/self.armor
-			print(self.health)
-			print('_______________')
-			self.show_pontuaction(self.health, True)
-		else: 
-			print ('DOIDO')
-		
-	def show_pontuaction(self, health, test):
-		message_display(50, 625, str(health), test)
-		message_display(750, 625, str(health), test)
+	#@listen('frame-enter')
+	#def show_pontuaction(self):
+	#	message_display(50, 625, str(blueGlobalHealth))
+	#	message_display(750, 625, str(redGlobalHealth))

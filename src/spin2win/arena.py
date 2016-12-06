@@ -3,6 +3,9 @@ from spin2win.character import Character
 from spin2win.text import text_objects
 from spin2win.text import message_display
 import pygame
+from spin2win.music import Music
+import os
+_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 class Arena(World):
 	def init(self):
@@ -12,6 +15,9 @@ class Arena(World):
 		self.red.force = lambda v: -100*self.red.is_force_on*abs(self.red.pos-pos.middle)*(self.red.pos-pos.middle)
 		self.blue.force =  lambda t: -100*self.blue.is_force_on*abs(self.blue.pos-pos.middle)*(self.blue.pos-pos.middle)
 		self.damping=0.9
+		
+		main_sound = os.path.join(_ROOT, 'sounds/battle_theme.mp3')
+		Music.play_music(main_sound)
 		
 		self.draw_walls()
 		
@@ -39,5 +45,3 @@ class Arena(World):
 		self.rigthwall = self.add.aabb(shape=(width, height), pos=(800,300), mass='inf')
 		self.topwall = self.add.aabb(shape=(height, width), pos=(400,600), mass='inf')
 		self.botwall = self.add.aabb(shape=(height, width), pos=(400,0), mass='inf')
-		
- 

@@ -51,7 +51,7 @@ def game_intro():
                 
         gameDisplay.fill(white)
         largeText = pygame.font.SysFont("comicsansms",115)
-        TextSurf, TextRect = text_objects("Spin2Win", largeText)
+        TextSurf, TextRect = text_objects("Spin2Win", largeText, black)
         TextRect.center = ((display_width/2),(display_height/2))
         gameDisplay.blit(TextSurf, TextRect)
 
@@ -73,7 +73,7 @@ def button(msg,x,y,w,h,ic,ac, action=None):
         pygame.draw.rect(gameDisplay, ic,(x,y,w,h))
 
     smallText = pygame.font.SysFont("comicsansms",20)
-    textSurf, textRect = text_objects(msg, smallText)
+    textSurf, textRect = text_objects(msg, smallText, black)
     textRect.center = ( (x+(w/2)), (y+(h/2)) )
     gameDisplay.blit(textSurf, textRect)
 	
