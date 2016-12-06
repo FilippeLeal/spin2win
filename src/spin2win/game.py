@@ -1,5 +1,4 @@
-from FGAme import *
-import pygame	
+from FGAme import *	
 from spin2win.arena import *
 			
 arena = Arena()

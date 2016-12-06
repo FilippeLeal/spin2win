@@ -4,8 +4,8 @@ import os
 _ROOT = os.path.abspath(os.path.dirname(__file__))
 from spin2win.text import message_display
 
-blueGlobalHealth = 100
-redGlobalHealth = 100
+#blueGlobalHealth = 100
+#redGlobalHealth = 100
 class Character(RegularPoly):
 	def __init__(self, name, health,armor,in_dash=False,dash_cd=False,defense_cd=False, is_force_on = 1,*args, **kwargs):
 		self.name = name
@@ -91,6 +91,7 @@ class Character(RegularPoly):
 	
 	def check_lose(self):
 		if self.x < 0 or self.x > 800 or self.y < 0 or self.y > 600:
+			print("%s PERDEU" % self.name)
 			exit()
 		elif self.health <= 0:
 			print("%s PERDEU" % self.name)
@@ -102,21 +103,20 @@ class Character(RegularPoly):
 		if isinstance(A, Character) and isinstance(B, Character):
 			A.deal_damage()
 			B.deal_damage()
-			return True
-		else:
-			return False
 			
 	#FIX-ME: O unico jeito de atualizar a vida foi usando variavel global, 
 	#parece que o frame-enter pega os valores iniciais do objeto, por isso o uso de globais
 	def deal_damage(self):
 		self.health-=50/self.armor
+		print(self.name)
 		print(self.health)
-		if(self.name == 'Azul'):
-			global blueGlobalHealth
-			blueGlobalHealth = self.health
-		elif(self.name == 'Vermelho'):
-			global redGlobalHealth
-			redGlobalHealth = self.health
+		print('----------')
+		#if(self.name == 'Azul'):
+		#	global blueGlobalHealth
+		#	blueGlobalHealth = self.health
+		#elif(self.name == 'Vermelho'):
+		#	global redGlobalHealth
+		#	redGlobalHealth = self.health
 	
 	#@listen('frame-enter')
 	#def show_pontuaction(self):

@@ -1,8 +1,5 @@
 from FGAme import *
 from spin2win.character import Character
-from spin2win.text import text_objects
-from spin2win.text import message_display
-import pygame
 from spin2win.music import Music
 import os
 _ROOT = os.path.abspath(os.path.dirname(__file__))
