@@ -90,12 +90,17 @@ class Character(RegularPoly):
 		
 	
 	def check_lose(self):
+		from spin2win.menu import game_intro
 		if self.x < 0 or self.x > 800 or self.y < 0 or self.y > 600:
 			print("%s PERDEU" % self.name)
+			message_display(400, 300, "%s Perdeu" % self.name)
 			exit()
+			#game_intro()
 		elif self.health <= 0:
 			print("%s PERDEU" % self.name)
+			message_display(400, 300, "%s Perdeu" % self.name)
 			exit()
+			#game_intro()
 
 	@listen('post-collision')
 	def detect_colision(arena, col):

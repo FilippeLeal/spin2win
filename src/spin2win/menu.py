@@ -2,9 +2,9 @@ import spin2win.game
 import pygame
 import time
 import random
+from spin2win.arena import Arena
 from spin2win.text import text_objects
-from FGAme import *
- 
+
 pygame.init()
 display_width = 800
 display_height = 600
@@ -24,7 +24,7 @@ pygame.display.set_caption('Spin2Win!')
 clock = pygame.time.Clock()
     
 
-def game_intro():        
+def game_intro():     
     intro = True
 
     while intro:
