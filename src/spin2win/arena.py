@@ -1,5 +1,9 @@
 from FGAme import *
 from spin2win.character import Character
+from spin2win.text import text_objects
+from spin2win.text import message_display
+import pygame
+import time
 
 class Arena(World):
 	def init(self):
@@ -28,7 +32,7 @@ class Arena(World):
 		
 		on('frame-enter').do(self.red.check_lose)
 		on('frame-enter').do(self.blue.check_lose)
-		
+		on('frame-enter').do(self.show_pontuaction)
 		
 	def draw_walls(self):
 		width=40
@@ -37,5 +41,9 @@ class Arena(World):
 		self.rigthwall = self.add.aabb(shape=(width, height), pos=(800,300), mass='inf')
 		self.topwall = self.add.aabb(shape=(height, width), pos=(400,600), mass='inf')
 		self.botwall = self.add.aabb(shape=(height, width), pos=(400,0), mass='inf')
-	
-	
+		
+	def show_pontuaction(self):
+		message_display(50, 625, '0')
+		message_display(750, 625, '1')
+		
+ 

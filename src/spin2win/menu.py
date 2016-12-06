@@ -2,6 +2,8 @@ import spin2win.game
 import pygame
 import time
 import random
+from spin2win.text import text_objects
+from FGAme import *
  
 pygame.init()
 display_width = 800
@@ -21,13 +23,13 @@ gameDisplay = pygame.display.set_mode((display_width,display_height))
 pygame.display.set_caption('Spin2Win!')
 clock = pygame.time.Clock()
  
-def text_objects(text, font):
-    textSurface = font.render(text, True, black)
-    return textSurface, textSurface.get_rect()
+#def text_objects(text, font):
+#    textSurface = font.render(text, True, black)
+#    return textSurface, textSurface.get_rect()
  
 def message_display(text):
     largeText = pygame.font.Font('freesansbold.ttf',115)
-    TextSurf, TextRect = text_objects(text, largeText)
+    TextSurf, TextRect = text.text_objects(text, largeText)
     TextRect.center = ((display_width/2),(display_height/2))
     gameDisplay.blit(TextSurf, TextRect)
  
@@ -55,7 +57,7 @@ def game_intro():
 
         button("GO!",150,450,100,50,green,bright_green, game_loop)
         button("Quit",550,450,100,50,red,bright_red,quitgame)
-
+   
         pygame.display.update()
         clock.tick(15)
 		
