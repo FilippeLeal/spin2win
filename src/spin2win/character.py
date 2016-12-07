@@ -95,12 +95,10 @@ class Character(RegularPoly):
 			print("%s PERDEU" % self.name)
 			message_display(400, 300, "%s Perdeu" % self.name)
 			exit()
-			#game_intro()
 		elif self.health <= 0:
 			print("%s PERDEU" % self.name)
 			message_display(400, 300, "%s Perdeu" % self.name)
 			exit()
-			#game_intro()
 
 	@listen('post-collision')
 	def detect_colision(arena, col):
